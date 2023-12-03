@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.my.xymh.entity.UserJobComment">
+
+
+    <select id="list" resultType="UserJobComment">
+        select *
+        from user_job_comment
+        where 1=1
+        <if test="jid != null">
+           and jid=#{jid}
+        </if>
+    </select>
+
+    <select id="insert" resultType="int">
+        insert into user_job_comment(uid,username,jid,comment,time)values(#{uid},#{username},#{jid},#{comment},#{time})
+    </select>
+
+
+</mapper>
+

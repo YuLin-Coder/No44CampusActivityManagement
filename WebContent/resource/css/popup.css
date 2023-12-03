@@ -1,0 +1,102 @@
+body{background-color:#fafafa;}
+
+/*--弹窗样式--*/
+
+#gray{width:100%;height:100%;background:rgba(0,0,0,0.3);position:fixed;top:0px;display:none;z-index:99;}
+
+.popup{
+	width:400px; 
+	height:auto;
+	background-color:#fff;
+	position:absolute;
+	z-index:100;
+	border:1px solid #ebeaea;
+	left:400px;
+	top:96px;
+	display:none;
+}
+.popup .top_nav{
+	width:400px;
+	height:46px;
+	background-image: url(../images/popup_top_bj.jpg);
+	border-bottom:1px solid #ebeaea;
+	position:relative;
+	cursor:move;
+}
+.popup .top_nav i{width:35px;height:35px;background:url(../images/sucai_tubiao.png) -314px -5px;position:absolute;top:6px;left:8px;display:block; }
+.popup .top_nav span{font:18px/18px 'microsoft yahei';color:#707070;display:block;position:absolute;top:13px;left:20px;}
+
+.popup .top_nav a.guanbi { background:url(../images/popup_guanbi.png) repeat 0px 0px; width:35px; height: 35px; display: block; position:absolute;top:8px; right: 10px; cursor:pointer;}
+.popup .top_nav a.guanbi span { display: none;}
+.popup .top_nav a.guanbi:hover { background: url(../images/popup_guanbi.png) repeat 0px -35px; }
+.popup .min{width:380px;height:auto;padding:10px 10px 20px 10px;}
+
+.tc_login{width:380px;background-color:#fff;}
+.tc_login .login_register{width:380px;}
+.tc_login .login_register .error{color: #ff0000; display: block; line-height: 20px; margin-top: 15px; margin-left: 34px; text-align: left;}
+.tc_login .login_register i{font-size:20px;color:#090;margin:15px 0 0px 0;}
+.tc_login .login_register .user{height: 36px; overflow: hidden; width: 316px; margin: 0 auto;}
+.tc_login .login_register a{font:13px/18px 'microsoft yahei';color:#666;float:right;margin:10px 32px 0px 6px;}
+.tc_login .login_register .user a{margin-right: 0;}
+.tc_login .login_register a:hover{color:#06F;text-decoration: underline;}
+.tc_login .login_register input{
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    color: #000;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+    height: 40px;
+    padding:0 0 0 34px;
+	margin:10px 0px 0px 0;
+    transition: background 0.3s ease-in-out;
+    width: 280px;
+}
+.tc_login .login_register input.r_user{
+	width: 16px; height: 16px; cursor: pointer; vertical-align: middle; margin-top: -2px; margin-right: 5px;
+}
+.tc_login .login_register input:focus {
+    outline: none;
+    border-color: #019A0D;
+    box-shadow: 0 0 0px #019A0D;
+}
+.tc_login .login_register .input_yh{background:url(../images/tc_login_yonghu.jpg) no-repeat left top;}
+.tc_login .login_register .input_mm{background:url(../images/tc_login_mima.jpg) no-repeat left top;}
+.tc_login .login_register .input_yz{background:url(../images/tc_login_code.png) no-repeat left top;}
+.tc_login .login_register .input_el{background:url(../images/tc_login_email.png) no-repeat left top;}
+.tc_login .login_register .input_yh:focus{background:url(../images/tc_login_yonghu2.jpg) no-repeat left top;}
+.tc_login .login_register .input_mm:focus{background:url(../images/tc_login_mima2.jpg) no-repeat left top;}
+.tc_login .login_register .input_el:focus{background:url(../images/tc_login_email2.png) no-repeat left top;}
+.tc_login .login_register .input_yz:focus{background:url(../images/tc_login_code2.png) no-repeat left top;}
+.tc_login .login_register .button{
+-webkit-appearance: none;
+    background:#36a803;
+    border: none;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    height: 44px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2em;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background 0.3s ease-in-out;
+    width: 316px;
+	padding:0 50px 0 50px;
+	font-weight: bold;
+	}
+.tc_login .login_register .button:hover { background: #019A0D;}
+.tc_login .login_register dd{width:100%;height:36px;}
+.tc_login .login_register dd a{font:12px/18px 'microsoft yahei';color:#06F;}
+.tc_login .login_register dd a:hover{font:13px/18px 'microsoft yahei';color:#06F;text-decoration: underline;}
+
+/*样式重置*/
+.register_box .tc_login{width: auto;}
+.register_box .tc_login .login_register{ width: 600px; margin-top: 70px;}
+.register_box .tc_login .login_register .error{margin-left: 92px;}
+.register_box .tc_login .login_register input{ width: 380px; height: 46px; line-height: 46px; margin-top: 15px;}
+.register_box .input_yh,.register_box .input_mm,.register_box .input_yh:focus,.register_box .input_mm:focus,.register_box .input_el,.register_box .input_el:focus,.register_box .input_yz,.register_box .input_yz:focus{background-position-y: 4px!important;}
+.register_box .tc_login .login_register .button{ width: 416px; height: 50px; margin-top: 30px;}
+.register_box .tc_login .authcode{width: 416px;}
+.register_box .tc_login .authcode input.input_yz{width: 200px;}
+.register_box .tc_login .authcode .code{width: 160px; height: 46px; line-height: 46px; border: solid 1px #ccc; margin-top: 15px;}

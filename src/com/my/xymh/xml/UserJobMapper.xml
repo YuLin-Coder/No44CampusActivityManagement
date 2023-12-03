@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.my.xymh.entity.UserJob">
+
+
+    <select id="list" resultType="UserJob">
+        select *
+        from user_job
+        where 1=1
+        <if test="uid != null">
+            and uid=#{uid}
+        </if>
+        <if test="jid != null">
+            and jid=#{jid}
+        </if>
+    </select>
+
+    <select id="insert" resultType="int">
+        insert into user_job(uid,username,jid,title,createtime)values(#{uid},#{username},#{jid},#{title},#{createtime})
+    </select>
+
+    <sql id="SchoolJob_field">
+           id,
+           uid,
+           username,
+           createtime
+	</sql>
+
+    <sql id="SchoolJob_where">
+        <if test="jid != null " >
+            and jid =#{jid}
+        </if>
+    </sql>
+
+    <select id="findBySqlId" resultType="com.my.xymh.entity.UserJob" parameterType="map">
+        select <include refid="SchoolJob_field" />
+        from user_job where 1=1
+        <include refid="SchoolJob_where" />
+        order by id desc limit #{pageOffset},#{pageSize}
+    </select>
+
+    <select id="findByEntity" resultType="com.my.xymh.entity.UserJob" parameterType="com.my.xymh.entity.UserJob">
+        select <include refid="SchoolJob_field" />
+        from user_job where 1=1
+        <include refid="SchoolJob_where" />
+        order by id desc
+    </select>
+</mapper>
+

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+    <!DOCTYPE mapper   
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.my.xymh.entity.RoleAction">
+
+     <!-- 实体类与数据库映射字段部分  start -->
+	<resultMap id="ResultMapRoleAction" type="com.my.xymh.entity.RoleAction">
+        <result property="id" column="id"  jdbcType="INTEGER"/>
+        <result property="actionId" column="actionId"  jdbcType="INTEGER"/>
+        <result property="roleId" column="roleId"  jdbcType="INTEGER"/>
+	</resultMap>
+	 <!-- 实体类与数据库映射字段部分  end -->
+	 
+	 <!-- 声明数据库字段 -->
+	<sql id="RoleAction_field">
+           id,
+           actionId,
+           roleId
+	</sql>
+	
+	<!-- 实体类属性  -->
+	<sql id="RoleAction_insert">
+        	#{id} ,
+        	#{actionId} ,
+        	#{roleId} 
+	</sql>
+	
+	<!-- 执行修改时 数据库字段和表字段比较 -->
+	<sql id="RoleAction_update">
+		    <if test="actionId != null" >
+	            actionId = #{actionId} ,
+	        </if>
+		    <if test="roleId != null" >
+	            roleId = #{roleId} 
+	        </if>
+	</sql>
+	
+	<!-- 查询时条件 -->
+	<sql id="RoleAction_where">
+	        <if test="id != null " >
+	            and id =#{id}
+	        </if>
+	        <if test="actionId != null " >
+	            and actionId =#{actionId}
+	        </if>
+	        <if test="roleId != null " >
+	            and roleId =#{roleId}
+	        </if>
+	</sql>
+	
+	<!-- 以下是sql执行语句 
+	     注意：1)参数类型和返回值类型,通用查询 xxBySqlId 注意将默认的 id修改为方法需要的。
+	      2)非自定义的方法已经是basedao注明的。方法名一定要和id相同
+	      3)自定义类的方法注意是否和共有方法重名id
+	      4)执行sql出现顺序和baseDao方法一致，便于查询请勿随意添加，自定义的sql一律放在自定义sql区域
+	 -->
+	
+	<!-- 
+	 1.方法描述：新增数据
+	 2.参数：实体类
+	 3.返回：主键
+	-->
+	<insert id="insert" parameterType="com.my.xymh.entity.RoleAction" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO role_action (
+        <include refid="RoleAction_field" />
+        ) VALUES (
+        <include refid="RoleAction_insert" />       
+        )
+	</insert>
+	
+	<!-- 
+	 1.方法描述：新增数据(自定义sqlId)
+	 2.参数：实体类
+	 3.返回：主键
+	-->
+	<insert id="myInsertSqlId" parameterType="com.my.xymh.entity.RoleAction" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO role_action (
+        <include refid="RoleAction_field" />
+        ) VALUES (
+        <include refid="RoleAction_insert" />       
+        )
+	</insert>
+	
+	<!-- 
+	 1.方法描述：删除数据
+	 2.参数：主键id
+	-->
+	<delete id="delete" parameterType="java.lang.String">
+	 delete from role_action where id=#{id}
+	</delete>
+	
+	 <!-- 
+	 1.方法描述：删除数据(自定义)由于参数未知 因此在使用的时候注意要对参数进行判断。这里仅仅是一个模板
+	 2.参数：map
+	-->
+	<delete id="deleteBySqId" parameterType="map">
+	 delete from role_action where 1=1
+	 <include refid="RoleAction_where" />
+	</delete>
+	
+	<!-- 
+	 1.方法描述：修改数据
+	 2.参数：实体类
+	-->
+	<update id="update" parameterType="com.my.xymh.entity.RoleAction">
+        UPDATE role_action
+        <set>
+	        <include refid="RoleAction_update" />
+	    </set>
+        WHERE 1=1
+        	and id=#{id}       
+	</update>
+	
+	<!-- 
+	 1.方法描述：select查询单个
+	 2.参数：id
+	-->
+	<select id="load" resultMap="ResultMapRoleAction" parameterType="java.lang.String">
+		select 	<include refid="RoleAction_field" />
+ 		from role_action 
+ 		where id=#{id}
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：select查询单个(自定义)
+	 2.参数：map
+	-->
+	<select id="loadBySqlId" resultMap="ResultMapRoleAction" parameterType="map">
+		select 	<include refid="RoleAction_field" />
+ 		from role_action 
+ 		WHERE 1=1
+        	<include refid="RoleAction_where" />
+	</select>
+	
+	<!-- 
+	 1.方法描述：select查询单个(自定义)
+	 2.参数：实体类
+	-->
+	<select id="loadBySqlId2" resultMap="ResultMapRoleAction" parameterType="com.my.xymh.entity.RoleAction">
+		select 	<include refid="RoleAction_field" />
+ 		from role_action 
+ 		WHERE 1=1
+        	<include refid="RoleAction_where" />
+	</select>
+	
+	<!-- 
+	 1.方法描述：用于select查询所有
+	 2.参数：map
+	-->
+	<select id="list" resultMap="ResultMapRoleAction" parameterType="map">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+	</select>
+	<select id="selectByroleId" resultMap="ResultMapRoleAction" parameterType="int">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1 and roleId = #{id}
+	</select>
+	
+	<!-- 
+	 1.方法描述：用于select查询所有(自定义)
+	 2.参数：map
+	-->
+	<select id="listBySqlId" resultMap="ResultMapRoleAction" parameterType="map">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：用于select查询所有
+	 2.参数：无参数
+	-->
+	<select id="listAll" resultMap="ResultMapRoleAction">
+		select <include refid="RoleAction_field" />
+ 		from role_action 
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：用于select查询所有(自定义)
+	 2.参数：实体类
+	-->
+	<select id="listAllByEntity" resultMap="ResultMapRoleAction" parameterType="com.my.xymh.entity.RoleAction">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+	</select>
+	
+	
+	
+	<!-- 
+	 1.方法描述：查询分页
+	 2.参数：实体类
+	-->
+	<select id="findByEntity" resultMap="ResultMapRoleAction" parameterType="com.my.xymh.entity.RoleAction">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+ 		order by id desc
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页(自定义)
+	 2.参数：实体类
+	-->
+	<select id="findByEntitySqlId" resultMap="ResultMapRoleAction" parameterType="com.my.xymh.entity.RoleAction">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+ 		order by id desc
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：查询分页
+	 2.参数：map
+	-->
+	<select id="findByMap" resultMap="ResultMapRoleAction" parameterType="map">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+ 		order by id desc
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页(自定义)
+	 2.参数：map
+	-->
+	<select id="findByMapSqlId" resultMap="ResultMapRoleAction" parameterType="map">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+ 		order by id desc
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：查询分页 非插件
+	 2.参数：map
+	-->
+	<select id="find" resultMap="ResultMapRoleAction" parameterType="map">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+ 		order by id desc limit #{pageOffset},#{pageSize}
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件    总数
+	 2.参数：map
+	-->
+	<select id="find_count" resultMap="ResultMapRoleAction" parameterType="map">
+		select count(*)
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件   自定义
+	 2.参数：map
+	-->
+	<select id="findBySqlId" resultMap="ResultMapRoleAction" parameterType="map">
+		select <include refid="RoleAction_field" />
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+ 		order by id desc limit #{pageOffset},#{pageSize}
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件   总数  自定义
+	 2.参数：map
+	-->
+	<select id="findBySqlId_count" resultMap="ResultMapRoleAction" parameterType="map">
+		select count(*)
+ 		from role_action where 1=1
+ 		<include refid="RoleAction_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：批量插入
+	 2.参数：集合/数组
+	-->
+	<insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO role_action (
+        <include refid="RoleAction_field" />
+        ) VALUES 
+        <foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.id},
+			
+			#{item.actionId},
+			
+			#{item.roleId}
+			
+			)
+		</foreach>       
+        
+	</insert>
+    
+    <!-- 
+	 1.方法描述：批量修改
+	 2.参数：集合/数组
+	-->
+	<update id="updateBatch" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+			separator=";">
+        UPDATE 
+        role_action 
+        <set>
+		    <if test="item.actionId != null" >
+	        actionId = #{item.actionId},
+	        </if>
+		    <if test="item.roleId != null" >
+	        roleId = #{item.roleId}
+	        </if>
+	    </set>
+        WHERE 
+        	1=1 
+        </foreach>    
+	</update>
+
+</mapper>
+

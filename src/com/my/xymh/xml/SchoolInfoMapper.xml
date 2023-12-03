@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+    <!DOCTYPE mapper   
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.my.xymh.entity.SchoolInfo">
+
+     <!-- 实体类与数据库映射字段部分  start -->
+	<resultMap id="ResultMapSchoolInfo" type="com.my.xymh.entity.SchoolInfo">
+        <result property="id" column="id"  jdbcType="INTEGER"/>
+        <result property="content" column="content"  jdbcType="VARCHAR"/>
+        <result property="addTime" column="addTime"  jdbcType="TIMESTAMP"/>
+        <result property="addUserId" column="addUserId"  jdbcType="INTEGER"/>
+        <result property="title" column="title"  jdbcType="VARCHAR"/>
+	</resultMap>
+	 <!-- 实体类与数据库映射字段部分  end -->
+	 
+	 <!-- 声明数据库字段 -->
+	<sql id="SchoolInfo_field">
+           id,
+           content,
+           addTime,
+           addUserId,
+           title
+	</sql>
+	
+	<!-- 实体类属性  -->
+	<sql id="SchoolInfo_insert">
+        	#{id} ,
+        	#{content} ,
+        	#{addTime} ,
+        	#{addUserId} ,
+        	#{title} 
+	</sql>
+	
+	<!-- 执行修改时 数据库字段和表字段比较 -->
+	<sql id="SchoolInfo_update">
+		    <if test="content != null" >
+	            content = #{content} ,
+	        </if>
+		    <if test="addTime != null" >
+	            addTime = #{addTime} ,
+	        </if>
+		    <if test="addUserId != null" >
+	            addUserId = #{addUserId} ,
+	        </if>
+		    <if test="title != null" >
+	            title = #{title} 
+	        </if>
+	</sql>
+	
+	<!-- 查询时条件 -->
+	<sql id="SchoolInfo_where">
+	        <if test="id != null " >
+	            and id =#{id}
+	        </if>
+	        <if test="content != null " >
+	            and content =#{content}
+	        </if>
+	        <if test="addTime != null " >
+	            and addTime =#{addTime}
+	        </if>
+	        <if test="addUserId != null " >
+	            and addUserId =#{addUserId}
+	        </if>
+	        <if test="title != null " >
+	            and title =#{title}
+	        </if>
+	</sql>
+	
+	<!-- 以下是sql执行语句 
+	     注意：1)参数类型和返回值类型,通用查询 xxBySqlId 注意将默认的 id修改为方法需要的。
+	      2)非自定义的方法已经是basedao注明的。方法名一定要和id相同
+	      3)自定义类的方法注意是否和共有方法重名id
+	      4)执行sql出现顺序和baseDao方法一致，便于查询请勿随意添加，自定义的sql一律放在自定义sql区域
+	 -->
+	
+	<!-- 
+	 1.方法描述：新增数据
+	 2.参数：实体类
+	 3.返回：主键
+	-->
+	<insert id="insert" parameterType="com.my.xymh.entity.SchoolInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO school_info (
+        <include refid="SchoolInfo_field" />
+        ) VALUES (
+        <include refid="SchoolInfo_insert" />       
+        )
+	</insert>
+	
+	<!-- 
+	 1.方法描述：新增数据(自定义sqlId)
+	 2.参数：实体类
+	 3.返回：主键
+	-->
+	<insert id="myInsertSqlId" parameterType="com.my.xymh.entity.SchoolInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO school_info (
+        <include refid="SchoolInfo_field" />
+        ) VALUES (
+        <include refid="SchoolInfo_insert" />       
+        )
+	</insert>
+	
+	<!-- 
+	 1.方法描述：删除数据
+	 2.参数：主键id
+	-->
+	<delete id="delete" parameterType="java.lang.String">
+	 delete from school_info where id=#{id}
+	</delete>
+	
+	 <!-- 
+	 1.方法描述：删除数据(自定义)由于参数未知 因此在使用的时候注意要对参数进行判断。这里仅仅是一个模板
+	 2.参数：map
+	-->
+	<delete id="deleteBySqId" parameterType="map">
+	 delete from school_info where 1=1
+	 <include refid="SchoolInfo_where" />
+	</delete>
+	
+	<!-- 
+	 1.方法描述：修改数据
+	 2.参数：实体类
+	-->
+	<update id="update" parameterType="com.my.xymh.entity.SchoolInfo">
+        UPDATE school_info
+        <set>
+	        <include refid="SchoolInfo_update" />
+	    </set>
+        WHERE 1=1
+        	and id=#{id}       
+	</update>
+	
+	<!-- 
+	 1.方法描述：select查询单个
+	 2.参数：id
+	-->
+	<select id="load" resultMap="ResultMapSchoolInfo" parameterType="java.lang.String">
+		select 	<include refid="SchoolInfo_field" />
+ 		from school_info 
+ 		where id=#{id}
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：select查询单个(自定义)
+	 2.参数：map
+	-->
+	<select id="loadBySqlId" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select 	<include refid="SchoolInfo_field" />
+ 		from school_info 
+ 		WHERE 1=1
+        	<include refid="SchoolInfo_where" />
+	</select>
+	
+	<!-- 
+	 1.方法描述：select查询单个(自定义)
+	 2.参数：实体类
+	-->
+	<select id="loadBySqlId2" resultMap="ResultMapSchoolInfo" parameterType="com.my.xymh.entity.SchoolInfo">
+		select 	<include refid="SchoolInfo_field" />
+ 		from school_info 
+ 		WHERE 1=1
+        	<include refid="SchoolInfo_where" />
+	</select>
+	
+	<!-- 
+	 1.方法描述：用于select查询所有
+	 2.参数：map
+	-->
+	<select id="list" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：用于select查询所有(自定义)
+	 2.参数：map
+	-->
+	<select id="listBySqlId" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：用于select查询所有
+	 2.参数：无参数
+	-->
+	<select id="listAll" resultMap="ResultMapSchoolInfo">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info order by id desc limit 0,5
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：用于select查询所有(自定义)
+	 2.参数：实体类
+	-->
+	<select id="listAllByEntity" resultMap="ResultMapSchoolInfo" parameterType="com.my.xymh.entity.SchoolInfo">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+	</select>
+	
+	
+	
+	<!-- 
+	 1.方法描述：查询分页
+	 2.参数：实体类
+	-->
+	<select id="findByEntity" resultMap="ResultMapSchoolInfo" parameterType="com.my.xymh.entity.SchoolInfo">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+ 		order by id desc
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页(自定义)
+	 2.参数：实体类
+	-->
+	<select id="findByEntitySqlId" resultMap="ResultMapSchoolInfo" parameterType="com.my.xymh.entity.SchoolInfo">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+ 		order by id desc
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：查询分页
+	 2.参数：map
+	-->
+	<select id="findByMap" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+ 		order by id desc
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页(自定义)
+	 2.参数：map
+	-->
+	<select id="findByMapSqlId" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+ 		order by id desc
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：查询分页 非插件
+	 2.参数：map
+	-->
+	<select id="find" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+ 		order by id desc limit #{pageOffset},#{pageSize}
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件    总数
+	 2.参数：map
+	-->
+	<select id="find_count" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select count(*)
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件   自定义
+	 2.参数：map
+	-->
+	<select id="findBySqlId" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select <include refid="SchoolInfo_field" />
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+ 		order by id desc limit #{pageOffset},#{pageSize}
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件   总数  自定义
+	 2.参数：map
+	-->
+	<select id="findBySqlId_count" resultMap="ResultMapSchoolInfo" parameterType="map">
+		select count(*)
+ 		from school_info where 1=1
+ 		<include refid="SchoolInfo_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：批量插入
+	 2.参数：集合/数组
+	-->
+	<insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO school_info (
+        <include refid="SchoolInfo_field" />
+        ) VALUES 
+        <foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.id},
+			
+			#{item.content},
+			
+			#{item.addTime},
+			
+			#{item.addUserId},
+			
+			#{item.title}
+			
+			)
+		</foreach>       
+        
+	</insert>
+    
+    <!-- 
+	 1.方法描述：批量修改
+	 2.参数：集合/数组
+	-->
+	<update id="updateBatch" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+			separator=";">
+        UPDATE 
+        school_info 
+        <set>
+		    <if test="item.content != null" >
+	        content = #{item.content},
+	        </if>
+		    <if test="item.addTime != null" >
+	        addTime = #{item.addTime},
+	        </if>
+		    <if test="item.addUserId != null" >
+	        addUserId = #{item.addUserId},
+	        </if>
+		    <if test="item.title != null" >
+	        title = #{item.title}
+	        </if>
+	    </set>
+        WHERE 
+        	1=1 
+        </foreach>    
+	</update>
+
+</mapper>
+

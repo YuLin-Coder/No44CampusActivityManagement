@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+    <!DOCTYPE mapper   
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.my.xymh.entity.User">
+
+     <!-- 实体类与数据库映射字段部分  start -->
+	<resultMap id="ResultMapUser" type="com.my.xymh.entity.User">
+        <result property="id" column="id"  jdbcType="INTEGER"/>
+        <result property="userName" column="userName"  jdbcType="VARCHAR"/>
+        <result property="nickName" column="nickName"  jdbcType="VARCHAR"/>
+        <result property="passWord" column="passWord"  jdbcType="VARCHAR"/>
+        <result property="code" column="code"  jdbcType="VARCHAR"/>
+        <result property="zy" column="zy"  jdbcType="VARCHAR"/>
+        <result property="nj" column="nj"  jdbcType="VARCHAR"/>
+        <result property="isDelete" column="isDelete"  jdbcType="INTEGER"/>
+        <result property="type" column="type"  jdbcType="INTEGER"/>
+        <result property="roleId" column="roleId"  jdbcType="INTEGER"/>
+        <result property="phone" column="phone"  jdbcType="VARCHAR"/>
+		<result property="credit" column="credit"  jdbcType="INTEGER"/>
+         <association property="role" column="roleId"
+			javaType="com.my.xymh.entity.Role" select="com.my.xymh.entity.Role.load" />
+         
+	</resultMap>
+	 <!-- 实体类与数据库映射字段部分  end -->
+	 
+	 <!-- 声明数据库字段 -->
+	<sql id="User_field">
+           id,
+           userName,
+           nickName,
+           passWord,
+           code,
+           zy,
+           nj,
+           isDelete,
+           type,
+           roleId,
+           phone,
+           credit
+	</sql>
+	
+	<!-- 实体类属性  -->
+	<sql id="User_insert">
+        	#{id} ,
+        	#{userName} ,
+        	#{nickName} ,
+        	#{passWord} ,
+        	#{code} ,
+        	#{zy} ,
+        	#{nj} ,
+        	#{isDelete} ,
+        	#{type} ,
+        	#{roleId} ,
+        	#{phone},
+        	#{credit}
+	</sql>
+	
+	<!-- 执行修改时 数据库字段和表字段比较 -->
+	<sql id="User_update">
+		    <if test="userName != null" >
+	            userName = #{userName} ,
+	        </if>
+		    <if test="nickName != null" >
+	            nickName = #{nickName} ,
+	        </if>
+		    <if test="passWord != null" >
+	            passWord = #{passWord} ,
+	        </if>
+		    <if test="code != null" >
+	            code = #{code} ,
+	        </if>
+		    <if test="zy != null" >
+	            zy = #{zy} ,
+	        </if>
+		    <if test="nj != null" >
+	            nj = #{nj} ,
+	        </if>
+		    <if test="isDelete != null" >
+	            isDelete = #{isDelete} ,
+	        </if>
+		    <if test="type != null" >
+	            type = #{type} ,
+	        </if>
+		    <if test="roleId != null" >
+	            roleId = #{roleId} ,
+	        </if>
+	         <if test="phone != null" >
+	            phone = #{phone} 
+	        </if>
+			<if test="credit != null" >
+				credit = #{credit}
+			</if>
+	</sql>
+	
+	<!-- 查询时条件 -->
+	<sql id="User_where">
+	        <if test="id != null " >
+	            and id =#{id}
+	        </if>
+	        <if test="userName != null " >
+	            and userName =#{userName}
+	        </if>
+	        <if test="nickName != null " >
+	            and nickName =#{nickName}
+	        </if>
+	        <if test="passWord != null " >
+	            and passWord =#{passWord}
+	        </if>
+	        <if test="code != null " >
+	            and code =#{code}
+	        </if>
+	        <if test="zy != null " >
+	            and zy =#{zy}
+	        </if>
+	        <if test="nj != null " >
+	            and nj =#{nj}
+	        </if>
+	            and isDelete = 0
+	        <if test="type != null " >
+	            and type =#{type}
+	        </if>
+	        <if test="roleId != null " >
+	            and roleId =#{roleId}
+	        </if>
+	         <if test="phone != null " >
+	            and phone =#{phone}
+	        </if>
+	</sql>
+	
+	<!-- 以下是sql执行语句 
+	     注意：1)参数类型和返回值类型,通用查询 xxBySqlId 注意将默认的 id修改为方法需要的。
+	      2)非自定义的方法已经是basedao注明的。方法名一定要和id相同
+	      3)自定义类的方法注意是否和共有方法重名id
+	      4)执行sql出现顺序和baseDao方法一致，便于查询请勿随意添加，自定义的sql一律放在自定义sql区域
+	 -->
+	
+	<!-- 
+	 1.方法描述：新增数据
+	 2.参数：实体类
+	 3.返回：主键
+	-->
+	<insert id="insert" parameterType="com.my.xymh.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (
+        <include refid="User_field" />
+        ) VALUES (
+        <include refid="User_insert" />       
+        )
+	</insert>
+	
+	<!-- 
+	 1.方法描述：新增数据(自定义sqlId)
+	 2.参数：实体类
+	 3.返回：主键
+	-->
+	<insert id="myInsertSqlId" parameterType="com.my.xymh.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (
+        <include refid="User_field" />
+        ) VALUES (
+        <include refid="User_insert" />       
+        )
+	</insert>
+	
+	<!-- 
+	 1.方法描述：删除数据
+	 2.参数：主键id
+	-->
+	<delete id="delete" parameterType="java.lang.String">
+	 delete from user where id=#{id}
+	</delete>
+	
+	 <!-- 
+	 1.方法描述：删除数据(自定义)由于参数未知 因此在使用的时候注意要对参数进行判断。这里仅仅是一个模板
+	 2.参数：map
+	-->
+	<delete id="deleteBySqId" parameterType="map">
+	 delete from user where 1=1
+	 <include refid="User_where" />
+	</delete>
+	
+	<!-- 
+	 1.方法描述：修改数据
+	 2.参数：实体类
+	-->
+	<update id="update" parameterType="com.my.xymh.entity.User">
+        UPDATE user
+        <set>
+	        <include refid="User_update" />
+	    </set>
+        WHERE 1=1
+        	and id=#{id}       
+	</update>
+	
+	<!-- 
+	 1.方法描述：select查询单个
+	 2.参数：id
+	-->
+	<select id="load" resultMap="ResultMapUser" parameterType="java.lang.String">
+		select 	<include refid="User_field" />
+ 		from user 
+ 		where id=#{id}
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：select查询单个(自定义)
+	 2.参数：map
+	-->
+	<select id="loadBySqlId" resultMap="ResultMapUser" parameterType="map">
+		select 	<include refid="User_field" />
+ 		from user 
+ 		WHERE 1=1
+        	<include refid="User_where" />
+	</select>
+	
+	<!-- 
+	 1.方法描述：select查询单个(自定义)
+	 2.参数：实体类
+	-->
+	<select id="loadBySqlId2" resultMap="ResultMapUser" parameterType="com.my.xymh.entity.User">
+		select 	<include refid="User_field" />
+ 		from user 
+ 		WHERE 1=1
+        	<include refid="User_where" />
+	</select>
+	<select id="login" resultMap="ResultMapUser" parameterType="com.my.xymh.entity.User">
+		select 	<include refid="User_field" />
+ 		from user 
+ 		WHERE 1=1
+        	<include refid="User_where" />
+	</select>
+	<!-- 
+	 1.方法描述：用于select查询所有
+	 2.参数：map
+	-->
+	<select id="list" resultMap="ResultMapUser" parameterType="map">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：用于select查询所有(自定义)
+	 2.参数：map
+	-->
+	<select id="listBySqlId" resultMap="ResultMapUser" parameterType="map">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：用于select查询所有
+	 2.参数：无参数
+	-->
+	<select id="listAll" resultMap="ResultMapUser">
+		select <include refid="User_field" />
+ 		from user 
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：用于select查询所有(自定义)
+	 2.参数：实体类
+	-->
+	<select id="listAllByEntity" resultMap="ResultMapUser" parameterType="com.my.xymh.entity.User">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+	</select>
+	
+	
+	
+	<!-- 
+	 1.方法描述：查询分页
+	 2.参数：实体类
+	-->
+	<select id="findByEntity" resultMap="ResultMapUser" parameterType="com.my.xymh.entity.User">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+ 		order by id desc
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页(自定义)
+	 2.参数：实体类
+	-->
+	<select id="findByEntitySqlId" resultMap="ResultMapUser" parameterType="com.my.xymh.entity.User">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+ 		order by id desc
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：查询分页
+	 2.参数：map
+	-->
+	<select id="findByMap" resultMap="ResultMapUser" parameterType="map">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+ 		order by id desc
+	</select>
+	<select id="findByNickName" resultMap="ResultMapUser" parameterType="map">
+		select <include refid="User_field" />
+ 		from user where
+ 		type = #{type} and isDelete = 0
+ 		   <if test="nickName != null " >
+	          and nickName like  CONCAT('%',#{nickName},'%')
+	        </if>
+ 		order by id desc
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页(自定义)
+	 2.参数：map
+	-->
+	<select id="findByMapSqlId" resultMap="ResultMapUser" parameterType="map">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+ 		order by id desc
+	</select>
+	
+	
+	<!-- 
+	 1.方法描述：查询分页 非插件
+	 2.参数：map
+	-->
+	<select id="find" resultMap="ResultMapUser" parameterType="map">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+ 		order by id desc limit #{pageOffset},#{pageSize}
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件    总数
+	 2.参数：map
+	-->
+	<select id="find_count" resultMap="ResultMapUser" parameterType="map">
+		select count(*)
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件   自定义
+	 2.参数：map
+	-->
+	<select id="findBySqlId" resultMap="ResultMapUser" parameterType="map">
+		select <include refid="User_field" />
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+ 		order by id desc limit #{pageOffset},#{pageSize}
+	</select>
+	
+	<!-- 
+	 1.方法描述：查询分页  非插件   总数  自定义
+	 2.参数：map
+	-->
+	<select id="findBySqlId_count" resultMap="ResultMapUser" parameterType="map">
+		select count(*)
+ 		from user where 1=1
+ 		<include refid="User_where" /> 
+	</select>
+	
+	<!-- 
+	 1.方法描述：批量插入
+	 2.参数：集合/数组
+	-->
+	<insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO user (
+        <include refid="User_field" />
+        ) VALUES 
+        <foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.id},
+			
+			#{item.userName},
+			
+			#{item.nickName},
+			
+			#{item.passWord},
+			
+			#{item.code},
+			
+			#{item.zy},
+			
+			#{item.nj},
+			
+			#{item.isDelete},
+			
+			#{item.type},
+			
+			#{item.roleId}
+			
+			)
+		</foreach>       
+        
+	</insert>
+    
+    <!-- 
+	 1.方法描述：批量修改
+	 2.参数：集合/数组
+	-->
+	<update id="updateBatch" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+			separator=";">
+        UPDATE 
+        user 
+        <set>
+		    <if test="item.userName != null" >
+	        userName = #{item.userName},
+	        </if>
+		    <if test="item.nickName != null" >
+	        nickName = #{item.nickName},
+	        </if>
+		    <if test="item.passWord != null" >
+	        passWord = #{item.passWord},
+	        </if>
+		    <if test="item.code != null" >
+	        code = #{item.code},
+	        </if>
+		    <if test="item.zy != null" >
+	        zy = #{item.zy},
+	        </if>
+		    <if test="item.nj != null" >
+	        nj = #{item.nj},
+	        </if>
+		    <if test="item.isDelete != null" >
+	        isDelete = #{item.isDelete},
+	        </if>
+		    <if test="item.type != null" >
+	        type = #{item.type},
+	        </if>
+		    <if test="item.roleId != null" >
+	        roleId = #{item.roleId}
+	        </if>
+	    </set>
+        WHERE 
+        	1=1 
+        </foreach>    
+	</update>
+
+</mapper>
+
